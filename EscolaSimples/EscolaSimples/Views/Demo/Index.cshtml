@@ -1,0 +1,28 @@
+@model List<DemoModel>
+
+@{
+    ViewData["Title"] = "Demonstrações de Actions";
+    var itens = Model;
+    
+}
+
+<h1>@ViewData["Title"]</h1>
+<h3>1. ViewResult - Lista de Itens</h3>
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th>Ações</th>
+    </tr>
+    @foreach (var item in itens)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Nome</td>
+            <td>@item.Descricao</td>
+            <td><a href="@Url.Action("Detalhes", new{Id = item.Id})">Ver detalhes</a></td>
+        </tr>
+    }
+    
+</table>

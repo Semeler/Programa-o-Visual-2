@@ -1,0 +1,22 @@
+@model DemoModel
+
+@{
+    ViewData["Title"] = "Detalhes de Actions";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (Model.Id == 0)
+{
+    <p>Item não encontrado</p>
+}
+else
+{
+    <p><strong>Id: </strong>@Model.Id</p>
+    <p><strong>Nome: </strong>@Model.Nome</p>
+    <p><strong>Descrição: </strong>@Model.Descricao</p>
+    <p><strong>Data: </strong>@Model.DataCriacao</p>
+    <p><strong>Status: </strong>@Model.Ativo</p>
+}
+
+<a href="@Url.Action("Index")">Voltar á lista</a>

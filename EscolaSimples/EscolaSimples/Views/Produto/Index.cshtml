@@ -1,0 +1,68 @@
+@model List<Produto>
+
+@{
+    ViewData["Title"] = "Lista de Produtos";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="mb-3">
+    <select id="categoriaFiltro" class="form-select d-inline-block w-auto">
+        <option value="">Selecione uma categoria</option>
+        @foreach (var categoria in Model.Select(p => p.Categoria).Distinct())
+        {
+            <option value="@categoria">@categoria</option>
+        }
+    </select>
+    <button onclick="filtrarCategoria()" class="btn btn-primary">Filtrar</button>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Preço</th>
+            <th>Categoria</th>
+            <th>Em Estoque</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var produto in Model)
+        {
+            <tr>
+                <td>@produto.Nome</td>
+                <td>@produto.Preco.ToString("C")</td>
+                <td>@produto.Categoria</td>
+                <td>@(produto.EmEstoque ? "Sim" : "Não")</td>
+                <td>
+                    <a href="@Url.Action("Detalhes", new { id = produto.Id })" class="btn btn-info btn-sm">Ver Detalhes</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="mt-4">
+    <h3>Downloads</h3>
+    <a href="@Url.Action("ExportarCsv")" class="btn btn-success">Exportar CSV</a>
+    <a href="@Url.Action("RelatorioTxt")" class="btn btn-secondary">Relatório TXT</a>
+    <a href="@Url.Action("ExportarJson")" class="btn btn-primary">Exportar JSON</a>
+</div>
+
+@section Scripts {
+    <script>
+    function filtrarCategoria() {
+        const categoria = document.getElementById('categoriaFiltro').value;
+        if (categoria) {
+            window.location.href = '@Url.Action("Categoria")?categoria=' + categoria;
+        }
+    }
+
+    function obterProdutosJson() {
+        fetch('@Url.Action("ObterProdutosJson")')
+            .then(response => response.json())
+            .then(data => console.log(data));
+    }
+    </script>
+}
