@@ -1,0 +1,31 @@
+@model Aula04.ViewModels.ProdutoDetalhesViewModel
+
+@{
+    ViewData["Title"] = "Detalhes do Produto";
+}
+
+<h2>@Model.NomeProduto</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h4>@Model.PrecoFormatado</h4>
+        <p>@Model.CategoriaExibicao</p>
+        <p>Status: @Model.StatusAtivo</p>
+        <p>@Model.TempoNoSistema</p>
+        <p class="alert alert-info">@Model.MensagemPromocional</p>
+        <p>Tags: @Model.TagsExibicao</p>
+
+        @if (Model.Relacionados.Any())
+        {
+            <h5>Produtos Relacionados</h5>
+            <ul>
+                @foreach (var relacionado in Model.Relacionados)
+                {
+                    <li>@relacionado</li>
+                }
+            </ul>
+        }
+    </div>
+</div>
+
+<a asp-action="Lista" class="btn btn-secondary mt-3">Voltar para Lista</a>

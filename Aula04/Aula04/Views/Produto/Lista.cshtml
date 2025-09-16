@@ -1,0 +1,56 @@
+@model IEnumerable<Aula04.ViewModels.ProdutoListagemItemViewModel>
+
+@{
+    ViewData["Title"] = "Lista de Produtos";
+}
+
+<h2>Produtos</h2>
+
+<div class="mb-3">
+    <strong>Filtrar por categoria:</strong>
+    <a asp-action="Lista" asp-route-categoria="Eletrônicos" class="btn btn-sm btn-outline-secondary">Eletrônicos</a>
+    <a asp-action="Lista" asp-route-categoria="Áudio" class="btn btn-sm btn-outline-secondary">Áudio</a>
+    <a asp-action="Lista" class="btn btn-sm btn-outline-secondary">Todos</a>
+</div>
+
+<div class="mb-3">
+    <strong>Ordenar por:</strong>
+    <a asp-action="Lista" asp-route-ordenarPor="preco_asc" class="btn btn-sm btn-outline-primary">Preço ↑</a>
+    <a asp-action="Lista" asp-route-ordenarPor="preco_desc" class="btn btn-sm btn-outline-primary">Preço ↓</a>
+    <a asp-action="Lista" asp-route-ordenarPor="nome" class="btn btn-sm btn-outline-primary">Nome</a>
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Preço</th>
+        <th>Categoria</th>
+        <th>Status</th>
+        <th>Tags</th>
+        <th>Badge</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Nome</td>
+            <td>@item.PrecoFormatado</td>
+            <td>@item.Categoria</td>
+            <td>@item.Status</td>
+            <td>@item.TagsExibicao</td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.Badge))
+                {
+                    <span class="badge bg-warning">@item.Badge</span>
+                }
+            </td>
+            <td>
+                <a asp-action="Detalhes" asp-route-id="@item.Id" class="btn btn-sm btn-info">Detalhes</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
