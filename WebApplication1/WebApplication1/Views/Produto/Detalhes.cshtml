@@ -1,0 +1,71 @@
+@using WebApplication1
+@using WebApplication1.Models
+@using WebApplication1.ViewModels
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+@model WebApplication1.ViewModels.ProdutoDetalhesViewModel
+
+@{
+    ViewData["Title"] = "Detalhes do Produto";
+}
+
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Lista">Lista de Produtos</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.NomeProduto</li>
+        </ol>
+    </nav>
+
+    <div class="card">
+        <div class="card-header">
+            <h2>@Model.NomeProduto</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <h3 class="text-primary">@Model.PrecoFormatado</h3>
+                    <p><strong>@Model.CategoriaExibicao</strong></p>
+                    <p>Status: <span class="badge bg-@(Model.StatusAtivo == "Ativo" ? "success" : "danger")">@Model.StatusAtivo</span></p>
+                    <p>@Model.TempoNoSistema</p>
+                    
+                    @if (!string.IsNullOrEmpty(Model.MensagemPromocional))
+                    {
+                        <div class="alert alert-info">
+                            @Model.MensagemPromocional
+                        </div>
+                    }
+                    
+                    @if (!string.IsNullOrEmpty(Model.TagsExibicao))
+                    {
+                        <p>
+                            <strong>Tags:</strong>
+                            @foreach (var tag in Model.TagsExibicao.Split(','))
+                            {
+                                <span class="badge bg-secondary me-1">@tag.Trim()</span>
+                            }
+                        </p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.Relacionados?.Any() == true)
+    {
+        <div class="mt-4">
+            <h4>Produtos Relacionados</h4>
+            <div class="list-group">
+                @foreach (var relacionado in Model.Relacionados)
+                {
+                    <a href="#" class="list-group-item list-group-item-action">@relacionado</a>
+                }
+            </div>
+        </div>
+    }
+
+    <div class="mt-4">
+        <a asp-action="Lista" class="btn btn-secondary">Voltar para Lista</a>
+    </div>
+</div>

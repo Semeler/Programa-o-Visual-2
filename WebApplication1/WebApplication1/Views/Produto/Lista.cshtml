@@ -1,0 +1,55 @@
+@using WebApplication1.ViewModels
+@model IEnumerable<WebApplication1.ViewModels.ProdutoListagemItemViewModel>
+
+@{
+    ViewData["Title"] = "Lista de Produtos";
+}
+
+
+<h2>Lista de Produtos</h2>
+
+<div class="filtros">
+    <div class="categorias">
+        <a href="@Url.Action("Lista", new { ordenarPor = Context.Request.Query["ordenarPor"] })">Todas</a> |
+        <a href="@Url.Action("Lista", new { categoria = "Eletrônicos", ordenarPor = Context.Request.Query["ordenarPor"] })">Eletrônicos</a> |
+        <a href="@Url.Action("Lista", new { categoria = "Áudio", ordenarPor = Context.Request.Query["ordenarPor"] })">Áudio</a>
+    </div>
+    
+    <div class="ordenacao">
+        Ordenar por:
+        <a href="@Url.Action("Lista", new { categoria = Context.Request.Query["categoria"], ordenarPor = "preco_asc" })">Menor Preço</a> |
+        <a href="@Url.Action("Lista", new { categoria = Context.Request.Query["categoria"], ordenarPor = "preco_desc" })">Maior Preço</a> |
+        <a href="@Url.Action("Lista", new { categoria = Context.Request.Query["categoria"], ordenarPor = "nome" })">Nome</a>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Preço</th>
+            <th>Categoria</th>
+            <th>Status</th>
+            <th>Badge</th>
+            <th>Tags</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Nome</td>
+                <td>@item.PrecoFormatado</td>
+                <td>@item.Categoria</td>
+                <td>@item.Status</td>
+                <td>@item.Badge</td>
+                <td>@item.TagsExibicao</td>
+                <td>
+                    <a asp-controller="Produto" asp-action="Detalhes" asp-route-id="@item.Id">Detalhes</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
