@@ -1,0 +1,17 @@
+﻿@model AtividadeCliqueSimples.Models.ContadorModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contador de Cliques</title>
+</head>
+<body>
+<h1>Contador de Cliques</h1>
+    
+<p>Número atual de cliques: @Model.Cliques</p>
+
+<form method="post" asp-controller="Home" asp-action="Contar">
+    <button type="submit">Clique para Contar</button>
+</form>
+</body>
+</html>
